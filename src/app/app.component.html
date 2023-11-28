@@ -1,0 +1,13 @@
+<nav class="navbar navbar-expand navbar-light bg-light justify-content-between">
+  <span class="navbar-brand m-2">{{title}}</span>
+  <button mat-icon-button [matMenuTriggerFor]="menu">
+      <mat-icon>more_vert</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+  <button mat-menu-item [routerLink]="['/photos',0,'edit']">
+    <mat-icon>camera_enhance</mat-icon>
+    <span>Add image</span>
+    </button>
+  </mat-menu>
+</nav>
+<router-outlet></router-outlet>

@@ -1,0 +1,14 @@
+.closeButton{
+   display: flex;
+   justify-content: flex-end;
+}
+
+.buttons{
+    display: flex;
+    justify-content: center;
+}
+
+.img-fluid{
+    max-width: 100%;
+    height: auto;
+}

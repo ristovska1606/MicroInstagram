@@ -1,0 +1,18 @@
+
+<div class="closeButton"><button mat-button mat-dialog-close><mat-icon>close</mat-icon></button></div>
+<div class="dialog">
+   <mat-dialog-content>
+   <img class="img-fluid" src="{{photo?.url}}">
+   <h2> {{ photo?.title | uppercase}} </h2>
+   <h3> Photo id: {{ photo?.id }} </h3>
+   <h3> Album id: {{ photo?.albumId }}</h3>
+   </mat-dialog-content>
+</div>
+<div class="buttons">
+    <button mat-button [routerLink]="['/photos', photo?.id, 'edit']"> Edit </button>
+    <button mat-button (click)="delete()"> Delete </button>
+</div>
+
+
+
+
