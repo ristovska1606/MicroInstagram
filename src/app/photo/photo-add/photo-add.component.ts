@@ -54,8 +54,8 @@ export class PhotoAddComponent implements OnInit {
       id: new FormControl(this.photo ? this.photo.id : "",Validators.required, ),
       albumId: new FormControl(this.photo ? this.photo.albumId : "",Validators.required),
       title: new FormControl(this.photo ? this.photo.title : "",Validators.required),
-      url: new FormControl(this.photo ? this.photo.url : "",[Validators.required, Validators.pattern(`https://.+`)]),
-      thumbnailUrl: new FormControl(this.photo ? this.photo.thumbnailUrl : "",[Validators.required, Validators.pattern(`https://.+`)])
+      url: new FormControl(this.photo ? this.photo.url : "",[Validators.required, Validators.pattern(`https?://.+`)]),
+      thumbnailUrl: new FormControl(this.photo ? this.photo.thumbnailUrl : "",[Validators.required, Validators.pattern(`https?://.+`)])
     })
 
 

@@ -34,9 +34,9 @@
                          formControlName="albumId"
                          name="albumId"
                         />
-                        <div *ngIf="photoForm.get('albumId')?.invalid && (photoForm.get('albumId')?.dirty || photoForm.get('albumId')?.touched)"   class="alert">
-                            <div class="alert alert-danger" *ngIf="photoForm.get('albumId')?.errors?.['required']">Album id is required.</div>
-                        </div>
+                        <span *ngIf="photoForm.get('albumId')?.invalid && (photoForm.get('albumId')?.dirty || photoForm.get('albumId')?.touched)"   class="alert">
+                            <span class="alert alert-danger" *ngIf="photoForm.get('albumId')?.errors?.['required']">Album id is required.</span>
+                        </span>
                 </div>
               </div>
               <div class="form-group row mb-2">
@@ -50,9 +50,9 @@
                          formControlName="title"
                          name="title"
                         />
-                        <div *ngIf="photoForm.get('title')?.invalid && (photoForm.get('title')?.dirty || photoForm.get('title')?.touched)"   class="alert">
-                            <div class="alert alert-danger" *ngIf="photoForm.get('title')?.errors?.['required']">Title is required.</div>
-                        </div>
+                        <span *ngIf="photoForm.get('title')?.invalid && (photoForm.get('title')?.dirty || photoForm.get('title')?.touched)"   class="alert">
+                            <span class="alert alert-danger" *ngIf="photoForm.get('title')?.errors?.['required']">Title is required.</span>
+                        </span>
                 </div>
               </div>
               <div class="form-group row mb-2">
