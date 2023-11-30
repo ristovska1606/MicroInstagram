@@ -22,6 +22,14 @@ export class PhotoService{
         );
     }
 
+    getPhotosLimited(start: number, limit: number): Observable<Photo[]>{
+      const url = `${this.photoUrl}?_start=${start}&_limit=${limit}`;
+      return this.http.get<Photo[]>(url)
+      .pipe(
+          tap(data => console.log(JSON.stringify(data)))
+      );
+  }
+
     getPhotoById(id: number): Observable<Photo>{
         if(id === 0){
             return of(this.initializePhoto());

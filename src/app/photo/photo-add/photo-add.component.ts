@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { PhotoService } from '../photo.service';
 import { Photo, PhotoResolved } from 'src/app/models/photo';
@@ -15,6 +15,7 @@ export class PhotoAddComponent implements OnInit {
 [x: string]: any;
 
   cardTitle?: string;
+  photoTitle?: string
   photoForm!: FormGroup;
   private currentPhoto: Photo | null=null; 
   private originalPhoto: Photo | null=null; 
@@ -43,17 +44,18 @@ export class PhotoAddComponent implements OnInit {
       if (!this.currentPhoto) {
           this.cardTitle = 'Add Product';
       } else {
-          this.cardTitle = `Edit Product: ${this.currentPhoto.id}`;
+          this.photoTitle = this.currentPhoto.title.toUpperCase();
+          this.cardTitle = `Edit Product:`;
       };
       
     })
 
     this.photoForm = new FormGroup({
-      id: new FormControl(this.photo ? this.photo.id : "",Validators.required),
+      id: new FormControl(this.photo ? this.photo.id : "",Validators.required, ),
       albumId: new FormControl(this.photo ? this.photo.albumId : "",Validators.required),
       title: new FormControl(this.photo ? this.photo.title : "",Validators.required),
-      url: new FormControl(this.photo ? this.photo.url : "",Validators.required),
-      thumbnailUrl: new FormControl(this.photo ? this.photo.thumbnailUrl : "",Validators.required)
+      url: new FormControl(this.photo ? this.photo.url : "",[Validators.required, Validators.pattern(`https://.+`)]),
+      thumbnailUrl: new FormControl(this.photo ? this.photo.thumbnailUrl : "",[Validators.required, Validators.pattern(`https://.+`)])
     })
 
 
@@ -75,7 +77,9 @@ export class PhotoAddComponent implements OnInit {
       }
     }
 
-    this.photoForm.reset();
+    //this.photoForm.reset();
+    if (confirm(`Save all changes?`))
+      this.router.navigate(['/photos']);
     
   }
 

@@ -42,11 +42,4 @@ export class PhotoDetailsComponent implements OnInit {
     }
   }
 
-  // onProductRetrieved(photo: Photo | null): void {
-  //   if(photo==null)
-  //     console.log(`Photo don't exists`)
-  //   else
-  //     this.photo = photo;
-  // }
-
 }

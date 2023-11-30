@@ -13,7 +13,8 @@ import { PhotoResolver } from "./photo/photo-resolver.service";
         RouterModule.forRoot([
           { path: 'photos', component: PhotoListComponent},
           { path: 'photos/:id/details', component: PhotoDetailsComponent},
-          { path: 'photos/:id/edit', component: PhotoAddComponent, resolve: {resolvedData: PhotoResolver}},
+          { path: 'photos/:id/edit', component: PhotoAddComponent, 
+            resolve: {resolvedData: PhotoResolver}},
           { path: '', redirectTo: 'photos', pathMatch:'full' }, //default path
           { path: '**', component: PageNotFoundComponent } //if the path dont match anything from the paths
           

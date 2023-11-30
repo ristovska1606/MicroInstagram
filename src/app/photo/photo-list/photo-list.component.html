@@ -1,7 +1,8 @@
+<span class="fa fa-spinner spinner"
+      *ngIf="loading"><mat-spinner></mat-spinner></span>
 <div class="container">
     <a mat-button *ngFor="let photo of currentItemsToShow, let i=index;" (click)="openDialog(photo.id)" >
         <img [src]="photo.thumbnailUrl" class="rounded mx-auto d-inline p-2" alt="Photo loading">
     </a>
-    <mat-paginator [length]="allPages" [pageSize]="itemsPerPage"  (page)="onPageChange($event)">
-    </mat-paginator>
+    <mat-paginator [length]="allPages" [pageSize]="itemsPerPage"  (page)="onPageChange($event)">   </mat-paginator>
 </div>

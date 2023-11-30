@@ -1,9 +1,11 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { Photo } from 'src/app/models/photo';
 import { PhotoService } from '../photo.service';
 import { MatDialog } from '@angular/material/dialog';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { PhotoDetailsComponent } from '../photo-details/photo-details.component';
+import { Router, Event, NavigationEnd, NavigationStart, NavigationError, NavigationCancel } from '@angular/router';
+import { SpinnerService } from './spinnerService.service';
 
 @Component({
   selector: 'app-photo-list',
@@ -15,31 +17,49 @@ export class PhotoListComponent implements OnInit {
   currentItemsToShow: any[] = []
   itemsPerPage: number = 30;
   allPages?: number;
-
-  @ViewChild('menu') menuTrigger!: MatMenuTrigger;
-
+  loading?: boolean;
+  start:number=0;
+  photosLength: number = 5000;
+  page:number = 0;
 
  constructor(private photoService: PhotoService,
-            public dialog: MatDialog) { }
+            public dialog: MatDialog,
+            private router: Router) { 
+              router.events.subscribe((routerEvent: Event) => {
+                this.checkRouterEvent(routerEvent);
+              });
+             }
+
+checkRouterEvent(routerEvent: Event): void {
+              if (routerEvent instanceof NavigationStart) {
+                this.loading = true;
+              }
+          
+              if (routerEvent instanceof NavigationEnd ||
+                  routerEvent instanceof NavigationCancel ||
+                  routerEvent instanceof NavigationError) {
+                  this.loading = false;
+              }
+            }           
+ 
   
   ngOnInit(): void {
-    this.photoService.getPhotos().subscribe({
+   this.loading = true;
+
+    this.photoService.getPhotosLimited(this.start,this.itemsPerPage).subscribe({
       next: photos => {
-        this.photos = photos;
-        this.photos.slice(0,this.itemsPerPage).map((item: any, i: any) =>{
-          this.currentItemsToShow.push(item)
-        });
-        this.allPages = Math.round(photos.length / this.itemsPerPage);
+        this.currentItemsToShow = photos;  
+        if(this.currentItemsToShow)
+          this.loading=false;
       }
     })
-
-    
+    this.allPages = Math.round(this.photosLength / this.itemsPerPage); 
   }
 
   openDialog(id: number) {
     const dialogRef = this.dialog.open(PhotoDetailsComponent, {
-      width: '600px',
-      height: '800px',
+      maxWidth: '600px',
+      maxHeight: '750px',
       data:{
         'photoId': id
       } 
@@ -48,8 +68,17 @@ export class PhotoListComponent implements OnInit {
   }
 
   onPageChange($event: { pageIndex: number; pageSize: number; }) {
-    this.currentItemsToShow =  this.photos.slice($event.pageIndex*$event.pageSize,
-    $event.pageIndex*$event.pageSize + $event.pageSize);
+
+   this.loading = true; 
+   this.currentItemsToShow=[]
+   this.photoService.getPhotosLimited($event.pageIndex*$event.pageSize, $event.pageSize).subscribe({
+      next: photos => {
+        this.currentItemsToShow = photos; 
+        if(this.currentItemsToShow)
+          this.loading=false;  
+      }
+     })  
+
   }
 
 }
